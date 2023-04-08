@@ -1,24 +1,27 @@
-import { PineconeClient } from '@pinecone-database/pinecone';
+import { PineconeClient } from "@pinecone-database/pinecone";
+import { getPreferenceValues } from "@raycast/api";
 
-console.log(process.env.PINECONE_ENVIRONMENT);
-if (!process.env.PINECONE_ENVIRONMENT || !process.env.PINECONE_API_KEY) {
-  throw new Error('Pinecone environment or api key vars missing');
-}
+const { pineconeApiKey, pineconeEnvironment } = getPreferenceValues();
 
 async function initPinecone() {
   try {
     const pinecone = new PineconeClient();
 
     await pinecone.init({
-      environment: process.env.PINECONE_ENVIRONMENT ?? '', //this is in the dashboard
-      apiKey: process.env.PINECONE_API_KEY ?? '',
+      environment: process.env.PINECONE_ENVIRONMENT || pineconeEnvironment,
+      apiKey: process.env.PINECONE_API_KEY || pineconeApiKey,
     });
 
     return pinecone;
   } catch (error) {
-    console.log('error', error);
-    throw new Error('Failed to initialize Pinecone Client');
+    console.log("error", error);
+    throw new Error("Failed to initialize Pinecone Client");
   }
 }
 
-export const pinecone = await initPinecone();
+async function initPineconeClient() {
+  const pinecone = await initPinecone();
+  return pinecone;
+}
+
+export const pinecone = initPineconeClient();

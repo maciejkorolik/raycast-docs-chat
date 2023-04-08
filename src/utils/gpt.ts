@@ -1,22 +1,25 @@
 import { VectorDBQAChain } from "langchain/chains";
 import { OpenAIEmbeddings } from "langchain/embeddings";
 import { PineconeStore } from "langchain/vectorstores";
-import { openai } from "@/utils/openai-client";
-import { pinecone } from "@/utils/pinecone-client";
-import { PINECONE_INDEX_NAME } from "@/config/pinecone";
+import { getPreferenceValues } from "@raycast/api";
+import { openai } from "./openai-client";
+import { pinecone } from "./pinecone-client";
+import { PINECONE_INDEX_NAME } from "../config/pinecone";
 
 export async function getAnswer(question: string): any {
   if (!question) {
     return;
   }
 
+  const { openAiApiKey } = getPreferenceValues();
+
   try {
     // OpenAI recommends replacing newlines with spaces for best results
     const sanitizedQuestion = question.trim().replaceAll("\n", " ");
 
-    const index = pinecone.Index(PINECONE_INDEX_NAME);
+    const index = (await pinecone).Index(PINECONE_INDEX_NAME);
     /* create vectorstore*/
-    const vectorStore = await PineconeStore.fromExistingIndex(new OpenAIEmbeddings({}), {
+    const vectorStore = await PineconeStore.fromExistingIndex(new OpenAIEmbeddings({ openAIApiKey: openAiApiKey }), {
       pineconeIndex: index,
       textKey: "text",
     });

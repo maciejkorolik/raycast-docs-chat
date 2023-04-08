@@ -14,16 +14,18 @@ export default function Command() {
   }
 
   return (
-    <Form
-      actions={
-        <ActionPanel>
-          <Action.SubmitForm onSubmit={handleSubmit} />
-        </ActionPanel>
-      }
-    >
-      <Form.Description text="Ask something about Next.js" />
-      <Form.TextArea id="question" title="Question" placeholder="Type your question..." />
+    <>
+      <Form
+        actions={
+          <ActionPanel>
+            <Action.SubmitForm onSubmit={handleSubmit} />
+          </ActionPanel>
+        }
+      >
+        <Form.Description text="Ask something about Next.js" />
+        <Form.TextArea id="question" title="Question" placeholder="Type your question..." />
+      </Form>
       {answer && <Detail markdown={answer} />}
-    </Form>
+    </>
   );
 }
