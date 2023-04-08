@@ -1,0 +1,47 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "nextgpt",
+  "title": "NextGPT",
+  "description": "Chat with Next.js docs",
+  "icon": "command-icon.png",
+  "author": "maciejkorolik",
+  "categories": [
+    "Data"
+  ],
+  "license": "MIT",
+  "commands": [
+    {
+      "name": "next-chat",
+      "title": "Next.js Chat",
+      "subtitle": "Chat with Next.js docs",
+      "description": "",
+      "mode": "view"
+    }
+  ],
+  "dependencies": {
+    "@pinecone-database/pinecone": "0.0.12",
+    "@raycast/api": "1.49.2",
+    "dotenv": "16.0.3",
+    "glob": "9.3.4",
+    "langchain": "0.0.49",
+    "node-fetch": "3.3.1",
+    "ora": "6.3.0"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "1.0.5",
+    "@types/node": "18.8.3",
+    "@types/react": "18.0.9",
+    "eslint": "7.32.0",
+    "prettier": "2.5.1",
+    "tsx": "3.12.6",
+    "typescript": "4.4.3"
+  },
+  "scripts": {
+    "build": "ray build -e dist",
+    "dev": "ray develop",
+    "fix-lint": "ray lint --fix",
+    "lint": "ray lint",
+    "publish": "npx @raycast/api@latest publish",
+    "ingest-data": "tsx -r dotenv/config src/scripts/ingest-data.ts"
+  }
+}
