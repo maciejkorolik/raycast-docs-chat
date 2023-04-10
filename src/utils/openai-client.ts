@@ -1,14 +1,14 @@
-import { getPreferenceValues } from "@raycast/api";
 import { OpenAI } from "langchain/llms";
+import { getSettings } from "../config/settings";
 
-const { openAiApiKey } = getPreferenceValues();
+const { openAIApiKey } = getSettings();
 
-if (!process.env.OPENAI_API_KEY && !openAiApiKey) {
+if (!openAIApiKey) {
   throw new Error("Missing OpenAI Credentials");
 }
 
 export const openai = new OpenAI({
-  temperature: 0,
+  temperature: 0.1,
   maxTokens: 500,
-  openAIApiKey: process.env.OPENAI_API_KEY || openAiApiKey,
+  openAIApiKey: openAIApiKey,
 });

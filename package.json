@@ -20,7 +20,7 @@
   ],
   "preferences": [
     {
-      "name": "openAiApiKey",
+      "name": "openAIApiKey",
       "description": "OpenAI API key",
       "type": "password",
       "required": true,

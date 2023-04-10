@@ -7,11 +7,15 @@ type Values = {
 };
 
 export default function Command() {
+  const [isLoading, setIsLoading] = useState(false);
   const [answer, setAnswer] = useState<string | null>(null);
   const [sources, setSources] = useState<{ path: string; name: string }[]>([]);
+
   async function handleSubmit(values: Values) {
+    setIsLoading(true);
     const answer = await getAnswer(values.question);
     setAnswer(answer.text);
+
     const sources = answer.sourceDocuments.map((doc) => {
       const path = doc.metadata.source.split(".")[0];
       const [name] = path.split("/").slice(-1);
@@ -19,6 +23,8 @@ export default function Command() {
     });
     const uniqueSources = [...new Map(sources.map((v) => [v.path, v])).values()];
     setSources(uniqueSources);
+
+    setIsLoading(false);
   }
 
   return (
@@ -29,6 +35,7 @@ export default function Command() {
             <Action.SubmitForm onSubmit={handleSubmit} />
           </ActionPanel>
         }
+        isLoading={isLoading}
       >
         <Form.Description text="Ask something about Next.js" />
         <Form.TextArea id="question" title="Question" placeholder="Type your question..." />

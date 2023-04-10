@@ -1,15 +1,15 @@
 import { PineconeClient } from "@pinecone-database/pinecone";
-import { getPreferenceValues } from "@raycast/api";
+import { getSettings } from "../config/settings";
 
-const { pineconeApiKey, pineconeEnvironment } = getPreferenceValues();
+const { pineconeApiKey, pineconeEnvironment } = getSettings();
 
 async function initPinecone() {
   try {
     const pinecone = new PineconeClient();
 
     await pinecone.init({
-      environment: process.env.PINECONE_ENVIRONMENT || pineconeEnvironment,
-      apiKey: process.env.PINECONE_API_KEY || pineconeApiKey,
+      environment: pineconeEnvironment,
+      apiKey: pineconeApiKey,
     });
 
     return pinecone;
