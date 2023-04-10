@@ -27,6 +27,11 @@ export default function Command() {
     setIsLoading(false);
   }
 
+  function resetAnswer() {
+    setAnswer(null);
+    setSources([]);
+  }
+
   return (
     <>
       <Form
@@ -39,11 +44,17 @@ export default function Command() {
       >
         <Form.Description text="Ask something about Next.js" />
         <Form.TextArea id="question" title="Question" placeholder="Type your question..." />
+        {isLoading && <Form.Description text="Thinking..." />}
       </Form>
       {answer && (
         <Detail
           markdown={answer}
           navigationTitle="Answer"
+          actions={
+            <ActionPanel>
+              <Action title="New question" onAction={resetAnswer} />
+            </ActionPanel>
+          }
           metadata={
             <Detail.Metadata>
               {sources.map((source) => (

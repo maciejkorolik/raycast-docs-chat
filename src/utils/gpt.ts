@@ -35,7 +35,6 @@ export async function getAnswer(question: string): any {
       max_k: 5,
       query: sanitizedQuestion,
     });
-    console.log(Object.keys(response));
     return response;
   } catch (error) {
     console.log(error);
